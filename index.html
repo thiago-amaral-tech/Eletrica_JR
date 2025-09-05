@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elétrica Júnior — Instalações & Manutenções</title>
+  <meta name="description" content="Elétrica Júnior em Poá/SP — Instalações, manutenção preventiva e corretiva, iluminação, painéis e mais. Atendimento até 00:00. Avaliação 5.0 (13)." />
+  <style>
+    :root{
+      --bg:#0a0f1e;           /* fundo escuro elegante */
+      --ink:#e9eefc;          /* texto principal */
+      --muted:#a9b3d1;        /* texto secundário */
+      --primary:#1f5eff;      /* azul elétrico */
+      --accent:#ffd300;       /* amarelo chamativo */
+      --card:#121931;         /* cartões */
+      --ok:#19c37d;
+      --danger:#ff3b3b;
+      --radius:22px;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:400 16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+    a{color:var(--accent);text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* HEADER / NAV */
+    header{
+      position:sticky;top:0;z-index:1000;background:rgba(10,15,30,.7);backdrop-filter:blur(6px);
+      border-bottom:1px solid rgba(255,255,255,.06)
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1100px;margin:auto;padding:12px 16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+      background:conic-gradient(from 230deg at 50% 50%, var(--accent), var(--primary));
+      box-shadow:var(--shadow)
+    }
+    .brand h1{font-size:18px;margin:0;letter-spacing:.3px}
+    nav ul{display:flex;gap:8px;list-style:none;margin:0;padding:0}
+    .nav a.btn{display:inline-block;padding:10px 14px;border-radius:14px;font-weight:600;color:#0a0f1e;background:var(--accent)}
+    .nav button{display:none}
+
+    /* BANNER / HERO */
+    .hero{
+      position:relative;overflow:hidden;isolation:isolate
+    }
+    .hero::before{
+      content:"";position:absolute;inset:-20%;z-index:-1;opacity:.75;
+      background:radial-gradient(60% 60% at 20% 30%, #1f5eff66 0%, transparent 60%),
+                 radial-gradient(50% 50% at 80% 20%, #ffd30066 0%, transparent 55%),
+                 radial-gradient(40% 40% at 70% 80%, #00ffd566 0%, transparent 60%),
+                 linear-gradient(135deg, #0b183e, #0a0f1e 60%);
+      filter:saturate(1.2)
+    }
+    .hero .wrap{max-width:1100px;margin:auto;padding:64px 16px 48px;display:grid;gap:28px;grid-template-columns:1.2fr .8fr;align-items:center}
+    .pill{display:inline-flex;align-items:center;gap:8px;color:#0a0f1e;background:var(--accent);border-radius:999px;padding:6px 12px;font-weight:700}
+    .title{font-size:42px;line-height:1.1;margin:8px 0 10px}
+    .subtitle{color:var(--muted);max-width:60ch}
+    .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+    .badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);padding:8px 10px;border-radius:999px}
+    .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+    .btn{display:inline-flex;align-items:center;gap:8px;border:none;padding:12px 16px;border-radius:16px;font-weight:700;cursor:pointer}
+    .btn.primary{background:var(--primary);color:white}
+    .btn.accent{background:var(--accent);color:#0a0f1e}
+    .btn.ghost{background:transparent;color:var(--ink);border:1px solid rgba(255,255,255,.18)}
+    .hero-card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.06)}
+
+    /* SECTION WRAPPER */
+    .container{max-width:1100px;margin:auto;padding:36px 16px}
+    .section{display:none}
+    .section.active{display:block}
+    h2.section-title{font-size:28px;margin:0 0 8px}
+    p.section-sub{color:var(--muted);margin-top:0}
+
+    /* SERVICES */
+    .grid{display:grid;gap:16px}
+    .grid.services{grid-template-columns:repeat(12,1fr)}
+    .service{
+      grid-column:span 12;background:var(--card);border:1px solid rgba(255,255,255,.06);
+      padding:16px;border-radius:18px;display:flex;gap:12px;align-items:flex-start;box-shadow:var(--shadow)
+    }
+    .service svg{flex:0 0 28px}
+    @media(min-width:600px){.service{grid-column:span 6}}
+    @media(min-width:900px){.service{grid-column:span 4}}
+
+    /* PORTFÓLIO */
+    .portfolio{grid-template-columns:repeat(12,1fr)}
+    .thumb{grid-column:span 12;aspect-ratio:16/10;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+    .thumb::before{content:"";display:block;width:100%;height:100%;
+      background:linear-gradient(135deg, #1f5eff44, #ffd30044),
+                 repeating-linear-gradient(45deg, transparent 0 10px, rgba(255,255,255,.04) 10px 20px)}
+    @media(min-width:700px){.thumb{grid-column:span 6}}
+
+    /* TESTIMONIALS */
+    .rating{display:flex;align-items:center;gap:8px}
+    .stars{display:inline-flex;gap:3px}
+    .stars svg{width:16px;height:16px;fill:var(--accent)}
+    .review{background:var(--card);border:1px solid rgba(255,255,255,.06);padding:14px;border-radius:16px}
+
+    /* CONTACT */
+    .contact-card{display:grid;gap:12px;background:var(--card);border:1px solid rgba(255,255,255,.06);padding:18px;border-radius:18px}
+    .contact-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+    /* FOOTER */
+    footer{border-top:1px solid rgba(255,255,255,.08);color:var(--muted);text-align:center;padding:28px 16px}
+
+    /* MOBILE NAV */
+    @media(max-width:860px){
+      .hero .wrap{grid-template-columns:1fr}
+      nav ul{display:none}
+      .nav button{display:inline-flex;background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--ink);padding:8px 12px;border-radius:10px}
+      .nav.open ul{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:rgba(10,15,30,.92);padding:8px 16px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+    }
+
+    /* FLOAT WHATSAPP */
+    .float{position:fixed;bottom:18px;right:18px;z-index:1000}
+    .float a{display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#062b19;border-radius:999px;padding:12px 16px;font-weight:800;box-shadow:var(--shadow)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav" id="topnav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <!-- Ícone raio/lâmpada -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="#0a0f1e"/>
+          </svg>
+        </div>
+        <h1>Elétrica Júnior</h1>
+      </div>
+      <nav>
+        <button id="menuBtn" aria-label="Abrir menu">Menu</button>
+        <ul id="menu">
+          <li><a href="#home" data-target="home" class="btn ghost">Início</a></li>
+          <li><a href="#servicos" data-target="servicos" class="btn ghost">Serviços</a></li>
+          <li><a href="#portfolio" data-target="portfolio" class="btn ghost">Portfólio</a></li>
+          <li><a href="#avaliacoes" data-target="avaliacoes" class="btn ghost">Avaliações</a></li>
+          <li><a href="#contato" data-target="contato" class="btn accent">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- BANNER / HERO (Início) -->
+  <section id="home" class="hero section active" role="region" aria-label="Início — banner">
+    <div class="wrap">
+      <div>
+        <span class="pill">⚡ Profissional Eletricista em Poá/SP</span>
+        <h2 class="title">Instalações & Manutenções elétricas com segurança e agilidade</h2>
+        <p class="subtitle">Atendimento em Poá e região. <strong>Aberto — fecha às 00:00</strong>. Avaliação <strong>5,0 ★</strong> (13 avaliações).</p>
+        <div class="badges">
+          <span class="badge">📍 R. Primeiro de Maio, 262 — Calmon Viana, Poá/SP, 08560‑030</span>
+          <span class="badge">📞 (11) 91091‑7689</span>
+        </div>
+        <div class="cta">
+          <a class="btn primary" href="tel:+5511910917689">Ligar agora</a>
+          <a class="btn accent" href="https://wa.me/5511910917689" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn ghost" href="#servicos" data-target="servicos">Ver serviços</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <strong>Serviços rápidos mais pedidos</strong>
+        <ul>
+          <li>Instalação de iluminação <em>externa</em> e de <em>luminárias</em></li>
+          <li>Troca de tomadas, interruptores e disjuntores</li>
+          <li>Quadro de distribuição (montagem/ajustes)</li>
+          <li>Chuveiro, aquecedor e resistências</li>
+          <li>Manutenção preventiva e corretiva</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos" class="section" role="region" aria-label="Serviços">
+    <div class="container">
+      <h2 class="section-title">Serviços</h2>
+      <p class="section-sub">Trabalhos mais procurados — portfólio de soluções elétricas.</p>
+      <div class="grid services">
+        <article class="service">
+          <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm4 0h14v-2H7v2zM3 7h2V5H3v2zm0 12h2v-2H3v2zm4 0h14v-2H7v2z"/></svg>
+          <div>
+            <h3>Instalação de luminárias</h3>
+            <p class="muted">Lustres, plafons, spots, trilhos e fitas LED com drivers e fontes.</p>
+          </div>
+        </article>
+        <article class="service">
+          <svg viewBox="0 0 24 24"><path d="M11 21h2V3h-2v18zM3 13h2v-2H3v2zm16 0h2v-2h-2v2z"/></svg>
+          <div>
+            <h3>Iluminação externa</h3>
+            <p class="muted">Jardins, garagens e fachadas com sensores de presença e fotocélula.</p>
+          </div>
+        </article>
+        <article class="service">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v10H4zM2 18h20v2H2z"/></svg>
+          <div>
+            <h3>Quadro de distribuição</h3>
+            <p class="muted">Reorganização de circuitos, DR/DPS, balanceamento e identificação.</p>
+          </div>
+        </article>
+        <article class="service">
+          <svg viewBox="0 0 24 24"><path d="M7 2h10v4H7zM5 8h14v12H5z"/></svg>
+          <div>
+            <h3>Tomadas & disjuntores</h3>
+            <p class="muted">Troca, padronização e correções de aquecimento e mau contato.</p>
+          </div>
+        </article>
+        <article class="service">
+          <svg viewBox="0 0 24 24"><path d="M12 2l4 7H8l4-7zm0 20l-4-7h8l-4 7z"/></svg>
+          <div>
+            <h3>Chuveiro/Aquecedor</h3>
+            <p class="muted">Instalação, troca de resistência e verificação de seção do circuito.</p>
+          </div>
+        </article>
+        <article class="service">
+          <svg viewBox="0 0 24 24"><path d="M12 4a8 8 0 100 16 8 8 0 000-16zm1 4h-2v6h6v-2h-4V8z"/></svg>
+          <div>
+            <h3>Manutenção preventiva</h3>
+            <p class="muted">Termografia visual, aperto de bornes, testes de fuga e isolamento.</p>
+          </div>
+        </article>
+      </div>
+      <div class="cta" style="margin-top:16px">
+        <a class="btn primary" href="tel:+5511910917689">Solicitar visita técnica</a>
+        <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query=R.%20Primeiro%20de%20Maio%2C%20262%20-%20Calmon%20Viana%2C%20Po%C3%A1%20-%20SP%2C%2008560-030" target="_blank" rel="noopener">Rotas</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFÓLIO (placeholders elegantes) -->
+  <section id="portfolio" class="section" role="region" aria-label="Portfólio">
+    <div class="container">
+      <h2 class="section-title">Portfólio</h2>
+      <p class="section-sub">Alguns trabalhos e tipos de serviço realizados recentemente.</p>
+      <div class="grid portfolio">
+        <div class="thumb"></div>
+        <div class="thumb"></div>
+        <div class="thumb"></div>
+        <div class="thumb"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÕES -->
+  <section id="avaliacoes" class="section" role="region" aria-label="Avaliações">
+    <div class="container">
+      <h2 class="section-title">Avaliações do Google</h2>
+      <p class="section-sub">Média <strong>5,0</strong> com 13 avaliações.</p>
+      <div class="rating">
+        <div class="stars" aria-label="5 de 5 estrelas">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+        </div>
+        <span>5,0 (13)</span>
+      </div>
+      <div class="grid" style="grid-template-columns:repeat(12,1fr);margin-top:14px">
+        <div class="review" style="grid-column:span 12">
+          <p><em>“Recomendo, super gentil e muito gente boa e ótimo profissional.”</em> — Cliente Google ★★★★★</p>
+        </div>
+        <div class="review" style="grid-column:span 12">
+          <p><em>“Trabalho de excelência, profissionais no que fazem, parabéns!”</em> — Cliente Google ★★★★★</p>
+        </div>
+        <div class="review" style="grid-column:span 12">
+          <p><em>“Serviço rápido e com preço bom.”</em> — Cliente Google ★★★★★</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato" class="section" role="region" aria-label="Contato">
+    <div class="container">
+      <h2 class="section-title">Contato</h2>
+      <p class="section-sub">Fale agora com a Elétrica Júnior.</p>
+      <div class="contact-card">
+        <div class="contact-row">📞 <strong>(11) 91091‑7689</strong> — <a href="tel:+5511910917689">Ligar</a> · <a target="_blank" rel="noopener" href="https://wa.me/5511910917689">WhatsApp</a></div>
+        <div class="contact-row">📍 R. Primeiro de Maio, 262 — Calmon Viana, Poá/SP, 08560‑030 — <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=R.%20Primeiro%20de%20Maio%2C%20262%20-%20Calmon%20Viana%2C%20Po%C3%A1%20-%20SP%2C%2008560-030">Rotas</a></div>
+        <div class="contact-row">🕒 Atendimento: aberto e <strong>fecha às 00:00</strong></div>
+        <form onsubmit="event.preventDefault();alert('Obrigado! Entraremos em contato.');">
+          <div class="grid" style="grid-template-columns:repeat(12,1fr);gap:12px">
+            <input style="grid-column:span 6;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:#0f162e;color:var(--ink)" required placeholder="Seu nome" />
+            <input style="grid-column:span 6;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:#0f162e;color:var(--ink)" required type="tel" placeholder="Telefone/WhatsApp" />
+            <textarea style="grid-column:span 12;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:#0f162e;color:var(--ink)" rows="4" placeholder="Descreva o serviço (ex.: instalar luminária externa)"></textarea>
+            <button class="btn primary" style="grid-column:span 12">Pedir orçamento</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <small>© <span id="year"></span> Elétrica Júnior — Poá/SP. Todos os direitos reservados.</small>
+  </footer>
+
+  <!-- WhatsApp flutuante -->
+  <div class="float">
+    <a href="https://wa.me/5511910917689" aria-label="Conversar no WhatsApp" target="_blank" rel="noopener">💬 WhatsApp</a>
+  </div>
+
+  <script>
+    // Alternar seções (single-page sem rolagem para âncoras)
+    const sections = Array.from(document.querySelectorAll('.section'));
+    const links = Array.from(document.querySelectorAll('[data-target]'));
+    function showSection(id){
+      sections.forEach(s=>s.classList.toggle('active', s.id===id));
+      window.scrollTo({top:0, behavior:'smooth'});
+      if(window.innerWidth<860) nav.classList.remove('open');
+    }
+    links.forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('data-target');
+        if(id){ e.preventDefault(); showSection(id); }
+      })
+    })
+
+    // menu mobile
+    const nav = document.getElementById('topnav');
+    document.getElementById('menuBtn').addEventListener('click', ()=>nav.classList.toggle('open'))
+
+    // ano no rodapé
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
